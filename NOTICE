@@ -1,0 +1,40 @@
+MAD (Mobile Analytics Document) — the MAD Designer and MAD Viewer apps
+Copyright (c) 2012-2026 Michael Thomason
+
+Licensed under the MIT License; see LICENSE.
+
+The names "MAD", "MAD Designer", "MAD Viewer", and the names of related
+products are the author's product names and marks. The application icons and
+other product artwork — including the AppIcon sets for MAD Designer and MAD
+Viewer, the MAD Query, MAD Designer and MAD Viewer marks in the app asset
+catalogs, and the app preview video and poster in docs/assets — are the
+author's copyright, and all rights in them are reserved. Neither the names nor
+the artwork are licensed under the MIT License, and no permission is granted to
+use them as the name or branding of another product, service, or distribution,
+or in a way that suggests endorsement by the author.
+
+Descriptive references to .mad files, to this project, and to its software are
+welcome: saying that a tool reads or writes .mad files, or that it is
+compatible with MAD, is not a use of the names as branding.
+
+This product includes third-party software. The licence texts and notices are
+collected in ThirdParty/Licenses/ (see its README for where each came from)
+and registered in docs/project/THIRD_PARTY_LICENSES.md. In particular:
+
+- FreeTDS 1.4.27 (LGPL-2.0-or-later, taken under LGPL-3.0) is linked
+  statically. One installed header (sybdb.h) is modified; the modification
+  and its date are marked in the file itself, and the edit is made by
+  Compressor/lib/recipes/freetds.sh. The complete corresponding source is
+  upstream FreeTDS at the version pinned in Compressor/matrix.conf. To
+  exercise the right to modify the library and relink this application, see
+  the written offer in ThirdParty/Licenses/README.md.
+
+- MariaDB Connector/C 3.4.11 (LGPL-2.0-or-later, taken under LGPL-3.0 for
+  the same reason as FreeTDS: it links OpenSSL 3) is linked statically as
+  libmariadbclient.a, with the caching_sha2_password and sha256_password
+  auth plugins compiled in and every other plugin disabled. The source is
+  the pinned upstream release in Compressor/matrix.conf, unmodified. The
+  same written relink offer covers it.
+
+- The .mad document format specification (docs/project/MAD_FORMAT.md) is
+  published freely. The names and artwork are addressed above.

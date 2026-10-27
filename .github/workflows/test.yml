@@ -1,0 +1,56 @@
+# Copyright © 2012-2026 Michael Thomason. SPDX-License-Identifier: MIT
+#
+# The action's own proof: run it against the checked-in SQLite fixture and
+# upload the export.  The schedule is the canary -- the image is `:latest`, so
+# a MAD change that breaks this wrapper turns this workflow red even when the
+# action source has not changed.  It is generated from mthomason/MAD; edit the
+# source there.
+
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Inspect the checked-in fixture
+        uses: ./
+        with:
+          command: inspect
+          document: fixtures/London.portable.mad
+
+      - name: Export the checked-in fixture
+        uses: ./
+        with:
+          command: export
+          document: fixtures/London.portable.mad
+          format: html
+          out-dir: mad-output
+
+      - name: Check the export
+        run: |
+          test -s mad-output/report.html
+          grep -qi '<!doctype html>' mad-output/report.html
+
+      - name: Record the engine image
+        run: docker image inspect ghcr.io/mthomason/mad:latest --format '{{.Id}}'
+
+      - name: Upload the report
+        uses: actions/upload-artifact@v4
+        with:
+          name: london-export
+          path: mad-output/

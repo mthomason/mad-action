@@ -1,0 +1,156 @@
+# Copyright © 2012-2026 Michael Thomason. SPDX-License-Identifier: MIT
+#
+# The source of truth for the mthomason/mad-action repository.  The publish
+# workflow copies this directory to that repo; do not edit it there.
+
+name: Run a MAD report
+
+description: Run a .mad report with the MAD headless engine and export it as a build artifact.
+
+author: Michael Thomason
+
+branding:
+  icon: bar-chart
+  color: blue
+
+inputs:
+  command:
+    description: 'The mad verb to run: inspect, schema, query, refresh, or export.'
+    required: true
+  document:
+    description: 'Path to the .mad document, relative to the workspace.'
+    required: true
+  format:
+    description: 'Export format: html, html-flow, text, csv, json, json-report, or pdf. The Linux image does not implement pdf.'
+    required: false
+    default: html
+  out-dir:
+    description: 'Directory, relative to the workspace, where export writes report.<ext>.'
+    required: false
+    default: mad-output
+  username:
+    description: 'Source-database user name. Pass a secret, never a literal.'
+    required: false
+  password:
+    description: 'Source-database password. Pass a secret, never a literal.'
+    required: false
+  host:
+    description: 'Source-database host override. Defaults to the host stored in the .mad.'
+    required: false
+  port:
+    description: 'Source-database port override. Defaults to the port stored in the .mad.'
+    required: false
+  database:
+    description: 'Source-database name override. Defaults to the name stored in the .mad.'
+    required: false
+  rows:
+    description: 'Stop after this many rows (refresh).'
+    required: false
+  image:
+    description: 'Advanced: the MAD image to run, for pinning an engine build. Defaults to the published latest.'
+    required: false
+    default: ghcr.io/mthomason/mad:latest
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      env:
+        MAD_COMMAND: ${{ inputs.command }}
+        MAD_DOCUMENT: ${{ inputs.document }}
+        MAD_FORMAT: ${{ inputs.format }}
+        MAD_OUT_DIR: ${{ inputs['out-dir'] }}
+        MAD_USERNAME: ${{ inputs.username }}
+        MAD_PASSWORD: ${{ inputs.password }}
+        MAD_HOST: ${{ inputs.host }}
+        MAD_PORT: ${{ inputs.port }}
+        MAD_DATABASE: ${{ inputs.database }}
+        MAD_ROWS: ${{ inputs.rows }}
+        MAD_IMAGE: ${{ inputs.image }}
+      run: |
+        set -euo pipefail
+
+        command -v docker >/dev/null 2>&1 || {
+          echo "::error::mad-action needs Docker, which the ubuntu-latest runner provides."
+          exit 1
+        }
+
+        case "${MAD_COMMAND}" in
+          inspect | schema | query | refresh | export) ;;
+          *)
+            echo "::error::command must be inspect, schema, query, refresh, or export (got '${MAD_COMMAND}')."
+            exit 2
+            ;;
+        esac
+
+        workspace="${GITHUB_WORKSPACE:-$PWD}"
+
+        case "${MAD_DOCUMENT}" in
+          '' | /* | *..*)
+            echo "::error::document must be a workspace-relative path (got '${MAD_DOCUMENT}')."
+            exit 2
+            ;;
+        esac
+        if [[ ! -f "${workspace}/${MAD_DOCUMENT}" ]]; then
+          echo "::error::document not found: ${MAD_DOCUMENT}"
+          exit 1
+        fi
+
+        out_dir="${MAD_OUT_DIR:-mad-output}"
+        case "${out_dir}" in
+          '' | /* | *..*)
+            echo "::error::out-dir must be a workspace-relative path (got '${out_dir}')."
+            exit 2
+            ;;
+        esac
+        mkdir -p "${workspace}/${out_dir}"
+
+        args=(mad "${MAD_COMMAND}" "/docs/${MAD_DOCUMENT}" --no-keychain)
+
+        if [[ -n "${MAD_USERNAME}" ]]; then
+          if [[ -z "${MAD_PASSWORD}" ]]; then
+            echo "::error::username was set without password; pass both from secrets."
+            exit 2
+          fi
+          echo "::add-mask::${MAD_PASSWORD}"
+          args+=(--credentials "${MAD_USERNAME}:${MAD_PASSWORD}")
+        elif [[ -n "${MAD_PASSWORD}" ]]; then
+          echo "::error::password was set without username; pass both from secrets."
+          exit 2
+        fi
+
+        if [[ -n "${MAD_HOST}" ]]; then
+          args+=(--host "${MAD_HOST}")
+        fi
+        if [[ -n "${MAD_PORT}" ]]; then
+          args+=(--port "${MAD_PORT}")
+        fi
+        if [[ -n "${MAD_DATABASE}" ]]; then
+          args+=(--database "${MAD_DATABASE}")
+        fi
+        if [[ -n "${MAD_ROWS}" ]]; then
+          args+=(--rows "${MAD_ROWS}")
+        fi
+
+        if [[ "${MAD_COMMAND}" == "export" ]]; then
+          format="${MAD_FORMAT:-html}"
+          case "${format}" in
+            html | html-flow) extension=html ;;
+            text) extension=txt ;;
+            csv) extension=csv ;;
+            json | json-report) extension=json ;;
+            pdf) extension=pdf ;;
+            *)
+              echo "::error::format must be html, html-flow, text, csv, json, json-report, or pdf (got '${format}')."
+              exit 2
+              ;;
+          esac
+          args+=(--format "${format}" --out "/out/report.${extension}")
+        fi
+
+        docker run --rm \
+          --add-host=host.docker.internal:host-gateway \
+          -v "${workspace}:/docs" \
+          -v "${workspace}/${out_dir}:/out" \
+          "${MAD_IMAGE}" \
+          "${args[@]}"
