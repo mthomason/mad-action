@@ -36,5 +36,11 @@ and registered in docs/project/THIRD_PARTY_LICENSES.md. In particular:
   the pinned upstream release in Compressor/matrix.conf, unmodified. The
   same written relink offer covers it.
 
+- PostgreSQL libpq 17.11 (PostgreSQL License) is linked statically as
+  libpq.a, libpgcommon.a, and libpgport.a (merged into libpostgres.a on
+  Apple). The source is the pinned upstream release in Compressor/matrix.conf,
+  unmodified; its copyright notice and disclaimer are in
+  ThirdParty/Licenses/postgres-LICENSE.txt.
+
 - The .mad document format specification (docs/project/MAD_FORMAT.md) is
   published freely. The names and artwork are addressed above.

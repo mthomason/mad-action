@@ -82,8 +82,7 @@ fixture in the MAD repository (`CLI/Fixtures/MySQL.employees.mad`) is a worked
 example, and `MADMySQL/TestDatabase/mysql-test-db.sh` seeds the `employees`
 sample it queries.
 
-A PostgreSQL example, for when the driver ships (`docs/project/MAD_FUTURE.md`
-in MAD describes the road there):
+A PostgreSQL example:
 
 ```yaml
     services:
@@ -91,7 +90,7 @@ in MAD describes the road there):
         image: postgres:17
         env:
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          POSTGRES_DB: employees
+          POSTGRES_DB: chinook
         ports:
           - 5432:5432
         options: >-
@@ -104,16 +103,18 @@ in MAD describes the road there):
       - uses: mthomason/mad-action@v1
         with:
           command: refresh
-          document: reports/employees-pg.mad
+          document: reports/chinook-pg.mad
           host: host.docker.internal
           port: '5432'
-          database: employees
+          database: chinook
           username: postgres
           password: ${{ secrets.DB_PASSWORD }}
 ```
 
-The driver is not in the engine yet, so this example is a target, not a
-working recipe.
+The PostgreSQL fixture in the MAD repository
+(`CLI/Fixtures/Postgres.chinook.mad`) is a worked example, and
+`MADPostgres/TestDatabase/postgres-test-db.sh` seeds the `chinook` sample it
+queries.
 
 ## Credentials
 
