@@ -1,3 +1,5 @@
+**English** | [简体中文](README_zh.md)
+
 # MAD Action
 
 Run a `.mad` report in GitHub Actions with the MAD headless engine. A report
