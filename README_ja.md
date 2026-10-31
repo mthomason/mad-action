@@ -1,4 +1,4 @@
-[English](README.md) | [简体中文](README_zh.md) | **日本語**
+[English](README.md) | [简体中文](README_zh.md) | **日本語** | [Português (Brasil)](README_pt-BR.md)
 
 # MAD Action
 
