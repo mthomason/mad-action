@@ -56,5 +56,13 @@ and registered in docs/project/THIRD_PARTY_LICENSES.md. In particular:
   distributed; the GNUstep Base command-line tools are GPL-3.0-or-later and
   are not part of mad.exe.
 
+- The headless PDF writer (the Linux image's `mad` and the Windows `mad.exe`)
+  links cairo 1.18.6 (MPL-1.1), pixman 0.46.4 (MIT) and FreeType 2.15.0 (FTL)
+  statically, and ships the Liberation Sans/Serif/Mono fonts 2.1.5 (SIL OFL
+  1.1) unmodified. No MPL-covered file is modified. The licence texts are in
+  ThirdParty/Licenses/ (cairo-MPL-1.1.txt, pixman-MIT.txt, freetype-FTL.txt,
+  liberation-OFL-1.1.txt), and the pins are Linux/libraries.conf and
+  Windows/Engine/libraries.conf.
+
 - The .mad document format specification (docs/project/MAD_FORMAT.md) is
   published freely. The names and artwork are addressed above.
