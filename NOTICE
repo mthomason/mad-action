@@ -42,5 +42,19 @@ and registered in docs/project/THIRD_PARTY_LICENSES.md. In particular:
   unmodified; its copyright notice and disclaimer are in
   ThirdParty/Licenses/postgres-LICENSE.txt.
 
+- The native Windows engine (`Windows/`, `mad.exe` and the future WPF app) is
+  built against the GNUstep runtime: GNUstep Base and gnustep-corebase
+  (LGPL-2.1-or-later), libiconv (LGPL-2.1-or-later for the library; its iconv
+  tools are GPL and are not shipped), libobjc2 (MIT), libdispatch (Apache-2.0
+  with the Swift runtime exception) and libffi (MIT). The statically linked
+  FreeTDS and MariaDB Connector/C carry the same LGPL-3.0 election and written
+  relink offer as the Apple app. The Windows distribution carries the notices
+  and licence texts under ThirdParty/Licenses/Windows/ (and the shared
+  C-library texts under ThirdParty/Licenses/). To exercise the LGPL right to
+  modify and relink the Windows engine, see the written offer in
+  ThirdParty/Licenses/README.md. gnustep-make is build tooling and is not
+  distributed; the GNUstep Base command-line tools are GPL-3.0-or-later and
+  are not part of mad.exe.
+
 - The .mad document format specification (docs/project/MAD_FORMAT.md) is
   published freely. The names and artwork are addressed above.
