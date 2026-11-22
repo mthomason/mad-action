@@ -154,5 +154,5 @@ engine, and pin the action to a commit if you need the wrapper frozen too.
 
 ## Licence
 
-MIT; see [LICENSE](LICENSE). The MAD names and app artwork are reserved under
-[NOTICE](NOTICE) and are not part of the MIT grant.
+MIT; see [LICENSE](../../LICENSE). The MAD names and app artwork are reserved under
+[NOTICE](../../NOTICE) and are not part of the MIT grant.

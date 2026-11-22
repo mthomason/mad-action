@@ -128,4 +128,4 @@ MAD 仓库中的 PostgreSQL 测试夹具（`CLI/Fixtures/Postgres.chinook.mad`�
 
 ## 许可证
 
-MIT；参见 [LICENSE](LICENSE)。MAD 名称和应用美术资源依据 [NOTICE](NOTICE) 保留，不属于 MIT 授权的一部分。
+MIT；参见 [LICENSE](../../LICENSE)。MAD 名称和应用美术资源依据 [NOTICE](../../NOTICE) 保留，不属于 MIT 授权的一部分。

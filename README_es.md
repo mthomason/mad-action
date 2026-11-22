@@ -154,5 +154,5 @@ reproducible, y fije la acción a un commit si necesita que el envoltorio tambi�
 
 ## Licencia
 
-MIT; consulte [LICENSE](LICENSE). Los nombres de MAD y el arte de las aplicaciones están reservados en
-[NOTICE](NOTICE) y no forman parte de la concesión MIT.
+MIT; consulte [LICENSE](../../LICENSE). Los nombres de MAD y el arte de las aplicaciones están reservados en
+[NOTICE](../../NOTICE) y no forman parte de la concesión MIT.

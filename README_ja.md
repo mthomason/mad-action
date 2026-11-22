@@ -128,4 +128,4 @@ MADリポジトリ内のPostgreSQLフィクスチャ（`CLI/Fixtures/Postgres.ch
 
 ## ライセンス
 
-MIT（[LICENSE](LICENSE)を参照）。MADの名称およびアプリアートワークは[NOTICE](NOTICE)の下で留保されており、MITライセンス供与の対象外です。
+MIT（[LICENSE](../../LICENSE)を参照）。MADの名称およびアプリアートワークは[NOTICE](../../NOTICE)の下で留保されており、MITライセンス供与の対象外です。

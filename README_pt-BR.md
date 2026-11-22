@@ -154,5 +154,5 @@ reproduzível, e fixe a Action em um commit específico caso também precise con
 
 ## Licença
 
-MIT; consulte [LICENSE](LICENSE). Os nomes MAD e a arte visual dos aplicativos são reservados nos termos do
-[NOTICE](NOTICE) e não fazem parte da concessão da licença MIT.
+MIT; consulte [LICENSE](../../LICENSE). Os nomes MAD e a arte visual dos aplicativos são reservados nos termos do
+[NOTICE](../../NOTICE) e não fazem parte da concessão da licença MIT.

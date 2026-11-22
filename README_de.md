@@ -157,5 +157,5 @@ Wrapper eingefroren sein soll.
 
 ## Lizenz
 
-MIT; siehe [LICENSE](LICENSE). Die MAD-Namen und das App-Artwork sind gemäß
-[NOTICE](NOTICE) vorbehalten und nicht Teil der MIT-Gewährung.
+MIT; siehe [LICENSE](../../LICENSE). Die MAD-Namen und das App-Artwork sind gemäß
+[NOTICE](../../NOTICE) vorbehalten und nicht Teil der MIT-Gewährung.
